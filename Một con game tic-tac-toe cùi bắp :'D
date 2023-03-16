@@ -1,0 +1,78 @@
+#include <bits/stdc++.h>
+using namespace std;
+int arr[3][3];
+
+void initialTable(){
+	for ( int i = 0; i < 3; i++)
+		for ( int j = 0; j < 3; j++) arr[i][j] = 2;
+}
+
+void showTable(){
+	cout << "+---+---+---+" << endl;
+	for ( int i = 0; i < 3; i++){
+		cout << "|";
+		for ( int j = 0; j < 3; j++){
+			if ( arr[i][j] == 1 ) cout << " X";
+			else if (arr[i][j] == 0 ) cout << " O";
+			else cout << "  ";
+			cout << " |";
+		}
+		cout << endl << "+---+---+---+" << endl;
+	}
+}
+
+int check(){
+	for ( int i = 0; i < 3; i++){
+		if ( arr[i][0] == arr[i][1] && arr[i][1] == arr[i][2] && arr[i][1] != 2){
+			return arr[i][1];
+		}
+	}
+	for ( int i = 0; i < 3; i++){
+		if ( arr[0][i] == arr[1][i] && arr[1][i] == arr[2][i] && arr[2][i] != 2){
+			return arr[1][i];
+		}
+	}
+	if ( arr[0][0] == arr[1][1] && arr[1][1] == arr[2][2] && arr[2][2] != 2 ) return arr[1][1];
+	if ( arr[0][2] == arr[1][1] && arr[1][1] == arr[2][0] && arr[2][0] != 2 ) return arr[1][1];
+	return 2;
+}
+
+int main(){
+    //ios_base::sync_with_stdio(0);
+    //cin.tie(0);
+    initialTable();
+    int cnt = 0;
+    showTable();
+    while(true){
+    	cnt++;
+    	if ( cnt == 10 ){
+    		cout << endl << "Draw " << endl;
+    		return 0;
+		}
+    	int a, b;
+    	if ( cnt % 2 == 1 ) cout << "Luot cua X !" << endl;
+    	else cout << "Luot cua O !" << endl;
+    	cout << "Nhap hang, cot:";
+    	cin >> a >> b;
+    	if ( arr[a-1][b-1] == 0 || arr[a-1][b-1] == 1 ){
+    		cout << endl << "Nhap sai, vui long nhap lai!" << endl << endl;
+    		cnt--;
+    		continue;
+		}
+    	if ( cnt % 2 == 1 ){
+    		arr[a-1][b-1] = 1;
+		}else{
+			arr[a-1][b-1] = 0;
+		}
+		int k = check();
+		if ( k == 1 ){
+			cout << endl << "X win" << endl;
+			return 0;
+		}
+		else if ( k == 0 ){
+			cout << endl << "O win" << endl;
+			return 0;
+		}else showTable();
+	}
+}
+
