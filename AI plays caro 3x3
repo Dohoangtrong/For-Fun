@@ -1,3 +1,8 @@
+//You will experience AI playing a game of Caro
+//
+// Do Hoang Trong
+
+
 #include <bits/stdc++.h>
 using namespace std;
 int arr[3][3];
