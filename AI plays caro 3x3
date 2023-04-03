@@ -1,0 +1,144 @@
+#include <bits/stdc++.h>
+using namespace std;
+int arr[3][3];
+int point[3][3];
+
+void initialPoint(){
+	for ( int i = 0; i < 3; i++)
+		for ( int j = 0; j < 3; j++) point[i][j] = 0;
+}
+void initialTable(){
+	for ( int i = 0; i < 3; i++)
+		for ( int j = 0; j < 3; j++) arr[i][j] = 2;
+}
+
+void showTable(){
+	cout << "+---+---+---+" << endl;
+	for ( int i = 0; i < 3; i++){
+		cout << "|";
+		for ( int j = 0; j < 3; j++){
+			if ( arr[i][j] == 1 ) cout << " X";
+			else if (arr[i][j] == 0 ) cout << " O";
+			else cout << "  ";
+			cout << " |";
+		}
+		cout << endl << "+---+---+---+" << endl;
+	}
+}
+
+int check(){
+	for ( int i = 0; i < 3; i++){
+		if ( arr[i][0] == arr[i][1] && arr[i][1] == arr[i][2] && arr[i][1] != 2){
+			return arr[i][1];
+		}
+	}
+	for ( int i = 0; i < 3; i++){
+		if ( arr[0][i] == arr[1][i] && arr[1][i] == arr[2][i] && arr[2][i] != 2){
+			return arr[1][i];
+		}
+	}
+	if ( arr[0][0] == arr[1][1] && arr[1][1] == arr[2][2] && arr[2][2] != 2 ) return arr[1][1];
+	if ( arr[0][2] == arr[1][1] && arr[1][1] == arr[2][0] && arr[2][0] != 2 ) return arr[1][1];
+	return 2;
+}
+
+int calPoint(){
+	int a;
+	for ( int i = 0; i < 3; i++){
+		for ( int j = 0; j < 3; j++){
+			if ( arr[i][j] == 2 ){
+				arr[i][j] = 1;
+				if ( check() == 1 ){
+					arr[i][j] = 2;
+					return 0;
+				}else{
+					a = 10;
+				}
+				arr[i][j] = 2;
+			}
+		}
+	}
+	return a;
+}
+
+
+void process(){
+	int checkContinue = 0;
+	int maxOp = 0;
+	initialPoint();
+	for ( int i = 0; i < 3; i++)
+		for ( int j = 0; j < 3; j++)
+			if ( arr[i][j] == 2 ){
+				checkContinue = 1;
+				arr[i][j] = 0;
+				if ( check() == 0 ){
+					showTable();
+					return;
+				}else{
+					point[i][j] = calPoint();
+					maxOp = max(point[i][j],maxOp);
+				}
+				arr[i][j] = 2;
+			}
+	if ( checkContinue == 0 ){
+		showTable();
+		return;
+	}
+	for ( int i = 0; i < 3; i++){
+		for ( int j = 0; j < 3; j++){
+			if ( point[i][j] == maxOp && arr[i][j] == 2 ){
+				arr[i][j] = 0;
+				showTable();
+				return;
+			}
+		}
+	}
+}
+
+int printRes(int k){
+	if ( k == 1 ){
+		cout << endl << "X win" << endl;
+		return 1;
+	}
+	else if ( k == 0 ){
+		cout << endl << "O win" << endl;
+		return 0;
+	}
+}
+
+int main(){
+    //ios_base::sync_with_stdio(0);
+    //cin.tie(0);
+    initialTable();
+    showTable();
+    int cnt = 0;
+    int k;
+    while(true){
+    	int a, b;
+    	cnt++;
+    	cout << "Nhap hang, cot:";
+    	cin >> a >> b;
+    	if ( arr[a-1][b-1] == 1 || arr[a-1][b-1] == 0 ){
+    		cout << endl << "Nhap sai, vui long nhap lai!" << endl << endl;
+    		cnt--;
+    		continue;
+		}
+		arr[a-1][b-1] = 1; 
+		showTable();
+		k = check();
+		if (printRes(k)==1){
+			return 0;
+		}
+		if ( cnt == 5 ){
+    		cout << endl << "Draw" << endl << endl;
+    		return 0;
+		}
+		cout << endl << "AI after play" << endl << endl;
+		process();
+		k = check();
+		if (printRes(k)==0){
+			return 0;
+		}
+	}
+}
+
