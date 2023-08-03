@@ -47,7 +47,6 @@ int check(){
 	if ( arr[0][2] == arr[1][1] && arr[1][1] == arr[2][0] && arr[2][0] != 2 ) return arr[1][1];
 	return 2;
 }
-
 // check streak win of player
 int findStreakWin(){
 	int streakWin = 0;
@@ -67,18 +66,18 @@ int findStreakWin(){
 }
 
 int calPoint(){
-	int a;
+	int a, streakWin = 0;
 	for ( int i = 0; i < 3; i++){
 		for ( int j = 0; j < 3; j++){
 			if ( arr[i][j] == 2 ){
 				arr[i][j] = 1;
-				int b = check();
-				if ( b == 1 ){
+				int b = findStreakWin();
+				if ( b >= 2 ){
 					arr[i][j] = 2;
 					return 0;
-				}else if ( b == 2 ){
+				}else if ( b == 1 ){
 					a = 10;
-				}
+				}else a = 20;
 				arr[i][j] = 2;
 			}
 		}
@@ -106,7 +105,7 @@ void process(){
 				arr[i][j] = 2;
 			}
 	
-	if ( maxOp == 10 && arr[1][1] == 2 ){
+	if ( maxOp == 20 && arr[1][1] == 2 ){
 		arr[1][1] = 0;
 		showTable();
 		return;
@@ -173,4 +172,3 @@ int main(){
 		}
 	}
 }
-
