@@ -48,6 +48,24 @@ int check(){
 	return 2;
 }
 
+// check streak win of player
+int findStreakWin(){
+	int streakWin = 0;
+	for ( int i = 0; i < 3; i++){
+		if ( arr[i][0] == arr[i][1] && arr[i][1] == arr[i][2] && arr[i][1] == 1){
+			streakWin++;
+		}
+	}
+	for ( int i = 0; i < 3; i++){
+		if ( arr[0][i] == arr[1][i] && arr[1][i] == arr[2][i] && arr[2][i] != 2){
+			streakWin++;
+		}
+	}
+	if ( arr[0][0] == arr[1][1] && arr[1][1] == arr[2][2] && arr[2][2] != 2 ) streakWin++;
+	if ( arr[0][2] == arr[1][1] && arr[1][1] == arr[2][0] && arr[2][0] != 2 ) streakWin++;
+	return streakWin;
+}
+
 int calPoint(){
 	int a;
 	for ( int i = 0; i < 3; i++){
