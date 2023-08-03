@@ -7,11 +7,12 @@
 using namespace std;
 int arr[3][3];
 int point[3][3];
-
+// init table caro
 void initialPoint(){
 	for ( int i = 0; i < 3; i++)
 		for ( int j = 0; j < 3; j++) point[i][j] = 0;
 }
+// value 1 is player, value 0 is AI and value 2 is none
 void initialTable(){
 	for ( int i = 0; i < 3; i++)
 		for ( int j = 0; j < 3; j++) arr[i][j] = 2;
@@ -30,7 +31,7 @@ void showTable(){
 		cout << endl << "+---+---+---+" << endl;
 	}
 }
-
+// check who is win
 int check(){
 	for ( int i = 0; i < 3; i++){
 		if ( arr[i][0] == arr[i][1] && arr[i][1] == arr[i][2] && arr[i][1] != 2){
