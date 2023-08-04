@@ -68,8 +68,7 @@ int findStreakWin(){
 int calPoint(){
 	int a = 0, streakWin = 0;
 	int b = findStreakWin();
-	cout << b << " ";
-	if ( b > 0 ) return b*10; 
+	if ( b > 0 ) return b; 
 	return a;
 }
 
@@ -98,6 +97,13 @@ void process(){
 		showTable();
 		return;
 	}
+	//cout << maxOp << endl;
+	if ( maxOp <= 1 && arr[1][1] == 2 ){
+		arr[1][1] = 0;
+		showTable();
+		return;
+	}
+	
 	for ( int i = 0; i < 3; i++){
 		for ( int j = 0; j < 3; j++){
 			if ( point[i][j] == maxOp && arr[i][j] == 2 ){
