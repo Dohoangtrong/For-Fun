@@ -7,7 +7,7 @@
 using namespace std;
 int arr[3][3];
 int point[3][3];
-// init table caro
+// init point table is 
 void initialPoint(){
 	for ( int i = 0; i < 3; i++)
 		for ( int j = 0; j < 3; j++) point[i][j] = 0;
@@ -39,35 +39,37 @@ int check(){
 		}
 	}
 	for ( int i = 0; i < 3; i++){
-		if ( arr[0][i] == arr[1][i] && arr[1][i] == arr[2][i] && arr[2][i] != 2){
+		if ( arr[0][i] == arr[1][i] && arr[1][i] == arr[2][i] && arr[1][i] != 2){
 			return arr[1][i];
 		}
 	}
-	if ( arr[0][0] == arr[1][1] && arr[1][1] == arr[2][2] && arr[2][2] != 2 ) return arr[1][1];
-	if ( arr[0][2] == arr[1][1] && arr[1][1] == arr[2][0] && arr[2][0] != 2 ) return arr[1][1];
+	if ( arr[0][0] == arr[1][1] && arr[1][1] == arr[2][2] && arr[1][1] != 2 ) return arr[1][1];
+	if ( arr[0][2] == arr[1][1] && arr[1][1] == arr[2][0] && arr[1][1] != 2 ) return arr[1][1];
 	return 2;
 }
-// check streak win of player
+
 int findStreakWin(){
-	int streakWin = 0;
+	int streak = 0, checkWhoWin;
 	for ( int i = 0; i < 3; i++){
-		if ( arr[i][0] == arr[i][1] && arr[i][1] == arr[i][2] && arr[i][1] == 1){
-			streakWin++;
+		for ( int j = 0; j < 3; j++){
+			if ( arr[i][j] == 2 ){
+				arr[i][j] = 1;
+				checkWhoWin = check();
+				if ( checkWhoWin == 1 ){
+					streak++;
+				}
+				arr[i][j] = 2;
+			}
 		}
 	}
-	for ( int i = 0; i < 3; i++){
-		if ( arr[0][i] == arr[1][i] && arr[1][i] == arr[2][i] && arr[2][i] != 2){
-			streakWin++;
-		}
-	}
-	if ( arr[0][0] == arr[1][1] && arr[1][1] == arr[2][2] && arr[2][2] != 2 ) streakWin++;
-	if ( arr[0][2] == arr[1][1] && arr[1][1] == arr[2][0] && arr[2][0] != 2 ) streakWin++;
-	return streakWin;
+	return streak;
 }
 
 int calPoint(){
-	int a, streakWin = 0;
-	
+	int a = 0, streakWin = 0;
+	int b = findStreakWin();
+	cout << b << " ";
+	if ( b > 0 ) return b*10; 
 	return a;
 }
 
@@ -84,18 +86,13 @@ void process(){
 				if ( check() == 0 ){
 					showTable();
 					return;
-				}else{
-					point[i][j] = calPoint();
-					maxOp = max(point[i][j],maxOp);
 				}
+				
+				arr[i][j] = 1;
+				point[i][j] = calPoint();
+				maxOp = max(point[i][j],maxOp);
 				arr[i][j] = 2;
 			}
-	
-	if ( maxOp == 20 && arr[1][1] == 2 ){
-		arr[1][1] = 0;
-		showTable();
-		return;
-	} 
 	
 	if ( checkContinue == 0 ){
 		showTable();
